@@ -12,3 +12,8 @@ body {
 .option-buttons {
   text-align: center;
 }
+
+.two-fields {
+  display: flex;
+  justify-content: space-between;
+}

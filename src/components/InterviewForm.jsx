@@ -11,15 +11,15 @@ export default class InterviewForm extends Component {
       company: '',
       position: '',
       notes: '',
-      interviewer: '',
       question: '',
+      date: new Date().toISOString().slice(0, 10),
     };
 
     this.handleCompany = this.handleCompany.bind(this);
     this.thunkPosition = this.thunkPosition.bind(this);
     this.handleNotes = this.handleNotes.bind(this);
-    this.handleInterviewer = this.handleInterviewer.bind(this);
     this.handleQuestion = this.handleQuestion.bind(this);
+    this.handleDate = this.handleDate.bind(this);
   }
 
   handleCompany(event) {
@@ -34,17 +34,31 @@ export default class InterviewForm extends Component {
     this.setState({ notes: event.target.value });
   }
 
-  handleInterviewer(event) {
-    this.setState({ interviewer: event.target.value });
-  }
-
   handleQuestion(event) {
     this.setState({ question: event.target.value });
+  }
+
+  handleDate(event) {
+    this.setState({ date: event.target.value });
   }
 
   render() {
     return (
       <form className="interview-form">
+        <div className="two-fields">
+          <TextField
+            label="Company"
+            value={this.state.company}
+            onChange={this.handleCompany}
+            required
+          />
+          <TextField
+            label="Date"
+            type="date"
+            value={this.state.date}
+            onChange={this.handleDate}
+          />
+        </div>
         <OptionButtons
           label="What sort of position did you apply for?"
           value={this.state.position}
@@ -55,17 +69,7 @@ export default class InterviewForm extends Component {
             'Back End',
             'DevOps',
           ]}
-        />
-        <TextField
-          label="Company"
-          value={this.state.company}
-          onChange={this.handleCompany}
-        />
-        <TextField
-          label="Who did you interview with?"
-          value={this.state.interviewer}
-          onChange={this.handleInterviewer}
-          fullWidth
+          required
         />
         <TextField
           label="What questions were most notable?"
