@@ -15,7 +15,7 @@ passport.use(new Strategy ({
   callbackURL: 'http://localhost:3000/welcome'
 },
   function(accessToken, refreshToken, profile, cb) {
-    console.log(Object.keys(profile));
+    console.log(Object.entries(profile));
     return cb(null, profile);
 }));
 

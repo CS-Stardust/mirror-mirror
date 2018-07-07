@@ -1,0 +1,19 @@
+{
+  "development": {
+    "use_env_variable": "postgres://ymkfvahb:HoLHnMR4mC5Rkg3P4Ob_Z6a9Mp6HuJE4@stampy.db.elephantsql.com:5432/ymkfvahb"
+  },
+  "test": {
+    "username": "ymkfvahb",
+    "password": "HoLHnMR4mC5Rkg3P4Ob_Z6a9Mp6HuJE4",
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "ymkfvahb",
+    "password": "HoLHnMR4mC5Rkg3P4Ob_Z6a9Mp6HuJE4",
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
