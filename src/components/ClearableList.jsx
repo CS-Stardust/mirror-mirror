@@ -12,7 +12,7 @@ const ClearableList = ({
   onRemove,
 }) => (
   <List>
-    {listValues.length > 0 && <Typography variant="subheader">{subheader}</Typography>}
+    {listValues.length > 0 && <Typography variant="subheading">{subheader}</Typography>}
     {listValues.map((item, idx) => (
       <ListItem style={{ padding: 0 }} key={item.id}>
         <IconButton id={`question-${idx}`} onClick={onRemove}>
