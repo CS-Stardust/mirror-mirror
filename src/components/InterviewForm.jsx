@@ -2,6 +2,18 @@ import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import OptionButtons from './OptionButtons';
+import ListField from './ListField';
+import axios from 'axios';
+
+let questionCounter = 0;
+
+const serializeForm = (state) => ({
+  company: state.company,
+  position: state.position,
+  notes: state.notes,
+  questions: state.questionList.map(val => val.question),
+  date: state.date,
+});
 
 export default class InterviewForm extends Component {
   constructor(props) {
@@ -9,9 +21,10 @@ export default class InterviewForm extends Component {
 
     this.state = {
       company: '',
-      position: '',
+      position: 'Full Stack',
       notes: '',
       question: '',
+      questionList: [],
       date: new Date().toISOString().slice(0, 10),
     };
 
@@ -20,6 +33,9 @@ export default class InterviewForm extends Component {
     this.handleNotes = this.handleNotes.bind(this);
     this.handleQuestion = this.handleQuestion.bind(this);
     this.handleDate = this.handleDate.bind(this);
+    this.handleAddQuestion = this.handleAddQuestion.bind(this);
+    this.handleRemoveQuestion = this.handleRemoveQuestion.bind(this);
+    this.submitForm = this.submitForm.bind(this);
   }
 
   handleCompany(event) {
@@ -38,8 +54,38 @@ export default class InterviewForm extends Component {
     this.setState({ question: event.target.value });
   }
 
+  handleAddQuestion() {
+    this.setState({
+      questionList: [
+        ...this.state.questionList,
+        {
+          question: this.state.question,
+          id: questionCounter,
+        },
+      ],
+      question: '',
+    });
+    questionCounter += 1;
+  }
+
+  handleRemoveQuestion(event) {
+    const id = parseInt(event.target.id.slice(9), 10);
+    this.setState({
+      questionList: [
+        ...this.state.questionList.slice(0, id),
+        ...this.state.questionList.slice(id + 1),
+      ],
+    });
+  }
+
   handleDate(event) {
     this.setState({ date: event.target.value });
+  }
+
+  submitForm() {
+    axios.post('/test', serializeForm(this.state))
+      .then(console.log)
+      .catch(console.error);
   }
 
   render() {
@@ -71,11 +117,15 @@ export default class InterviewForm extends Component {
           ]}
           required
         />
-        <TextField
+        <ListField
+          subheader="Questions"
           label="What questions were most notable?"
-          value={this.state.question}
+          fieldValue={this.state.question}
+          listValues={this.state.questionList}
           onChange={this.handleQuestion}
-          fullWidth
+          onAdd={this.handleAddQuestion}
+          onRemove={this.handleRemoveQuestion}
+          multiline
         />
         <TextField
           label="General notes"
@@ -85,7 +135,7 @@ export default class InterviewForm extends Component {
           multiline
         />
         <Button
-          onClick={() => console.log(this.state)}
+          onClick={this.submitForm}
           variant="contained"
           color="primary"
         >
