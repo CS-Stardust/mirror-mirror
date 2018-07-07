@@ -33,7 +33,6 @@ app.get('/', (req, res) => res.send('we are connected!'));
 app.get('/login', (req, res) => res.send('regular login here'));
 app.get('/login/github', passport.authenticate('github'));
 
-// app.get('/welcome', (req, res) => res.send('post-authentication redirect failure/success'));
 app.get('/welcome', 
   passport.authenticate('github', { failureRedirect: '/login' }),
   function(req, res) {
