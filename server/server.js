@@ -24,6 +24,7 @@ passport.serializeUser((user, cb) => cb(null, user));
 passport.deserializeUser((user, cb) => cb(null, user))
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(expressSession({secret: 'pick a winner', resave: true, saveUninitialized: true}));
 app.use(passport.initialize());
