@@ -1,8 +1,8 @@
 import React from 'react';
 import List from '@material-ui/core/List';
-import ListSubheader from '@material-ui/core/ListSubheader';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import ClearIcon from '@material-ui/icons/Clear';
 
@@ -11,7 +11,8 @@ const ClearableList = ({
   listValues,
   onRemove,
 }) => (
-  <List subheader={listValues.length ? <ListSubheader>{subheader}</ListSubheader> : ''}>
+  <List>
+    {listValues.length > 0 && <Typography variant="subheader">{subheader}</Typography>}
     {listValues.map((item, idx) => (
       <ListItem style={{ padding: 0 }} key={item.id}>
         <IconButton id={`question-${idx}`} onClick={onRemove}>

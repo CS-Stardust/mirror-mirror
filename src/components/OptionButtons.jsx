@@ -26,8 +26,9 @@ const OptionButtons = ({
   thunkChange,
   options,
   required,
+  style,
 }) => (
-  <div className="option-buttons">
+  <div style={style} className="option-buttons">
     <Typography variant="title">{label}{required && '*'}</Typography>
     {options.map((option, idx, { length }) => (
       <Button

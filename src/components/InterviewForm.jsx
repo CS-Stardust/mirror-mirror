@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import OptionButtons from './OptionButtons';
 import ListField from './ListField';
-import axios from 'axios';
 
 let questionCounter = 0;
 
-const serializeForm = (state) => ({
+const listStyles = {
+  marginBottom: '2em',
+};
+
+const serializeForm = state => ({
   company: state.company,
   position: state.position,
   notes: state.notes,
@@ -91,7 +95,20 @@ export default class InterviewForm extends Component {
   render() {
     return (
       <form className="interview-form">
-        <div className="two-fields">
+        <OptionButtons
+          style={listStyles}
+          label="What sort of position did you apply for?"
+          value={this.state.position}
+          thunkChange={this.thunkPosition}
+          options={[
+            'Full Stack',
+            'Front End',
+            'Back End',
+            'DevOps',
+          ]}
+          required
+        />
+        <div style={listStyles} className="two-fields">
           <TextField
             label="Company"
             value={this.state.company}
@@ -105,19 +122,8 @@ export default class InterviewForm extends Component {
             onChange={this.handleDate}
           />
         </div>
-        <OptionButtons
-          label="What sort of position did you apply for?"
-          value={this.state.position}
-          thunkChange={this.thunkPosition}
-          options={[
-            'Full Stack',
-            'Front End',
-            'Back End',
-            'DevOps',
-          ]}
-          required
-        />
         <ListField
+          style={listStyles}
           subheader="Questions"
           label="What questions were most notable?"
           fieldValue={this.state.question}
@@ -128,6 +134,7 @@ export default class InterviewForm extends Component {
           multiline
         />
         <TextField
+          style={listStyles}
           label="General notes"
           value={this.state.notes}
           onChange={this.handleNotes}
