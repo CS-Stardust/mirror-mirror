@@ -3,3 +3,17 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.interview-form {
+  max-width: 600px;
+  text-align: left;
+}
+
+.option-buttons {
+  text-align: center;
+}
+
+.two-fields {
+  display: flex;
+  justify-content: space-between;
+}

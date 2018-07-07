@@ -1,4 +1,5 @@
 const express = require('express');
+
 const app = express();
 const passport = require('passport');
 const Strategy = require('passport-github').Strategy;
@@ -22,6 +23,7 @@ passport.serializeUser((user, cb) => cb(null, user));
 passport.deserializeUser((user, cb) => cb(null, user))
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use(expressSession({secret: 'pick a winner', resave: true, saveUninitialized: true}));
@@ -46,7 +48,7 @@ app.post('/test', (req, res) => {
   logRequest(req);
   res.end();
 })
-app.get('*', (req, res) => res.status(404).send('error!'));
+app.use((req, res) => res.status(404).send('error!'));
 
 
 app.listen(3000, () => console.log('listening at port 3000...'));
