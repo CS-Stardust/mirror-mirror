@@ -2,6 +2,7 @@ export default {
   displayName: 'Joe Thel',
   handle: 'fakemonster',
   position: 'DevOps',
+  type: 'On-site',
   company: 'IDEO',
   date: '2018-07-04',
   questions: [

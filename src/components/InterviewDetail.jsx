@@ -5,9 +5,9 @@ const InterviewDetail = props => (
   <div className="interview-detail">
     <p className="no-margin">{props.displayName}</p>
     <a href={`https://github.com/${props.handle}`}>{props.handle}</a>
-    <h3>Overview</h3>
+    <h1>Interview with {props.company}</h1>
     <div className="one-line">
-      <LabeledText label="Company" text={props.company} />
+      <LabeledText label="Type" text={props.type} />
       <LabeledText label="Position" text={props.position} />
       <LabeledText label="Date" text={props.date} />
     </div>
