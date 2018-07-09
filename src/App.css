@@ -20,18 +20,22 @@
 }
 
 .App-title {
-  font-size: 1.5em;
+  font-size: 2em;
+  font-style: italic;
+  text-transform: uppercase;
 }
 
-.App-intro {
-  font-size: large;
+nav {
+  background-color: #6e8b3d;
+  padding: 0.5em;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+nav a {
+  margin: 0 1em;
+  padding: 0.5em;
+}
+
+header a {
+  text-decoration: none;
+  color: white;
 }
