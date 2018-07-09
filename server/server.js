@@ -7,24 +7,25 @@ const expressSession = require('express-session');
 
 require('dotenv').config();
 
-passport.use(new Strategy ({
+passport.use(new Strategy({
   clientID: process.env.GITHUB_CLIENT_ID,
   clientSecret: process.env.GITHUB_CLIENT_SECRET,
   callbackURL: 'http://localhost:3000/login/github/return'
 },
-  function(accessToken, refreshToken, profile, cb) {
+  function (accessToken, refreshToken, profile, cb) {
     console.log(Object.keys(profile));
     return cb(null, profile);
-}));
+  }));
 
 passport.serializeUser((user, cb) => cb(null, user.id));
 passport.deserializeUser((user, cb) => {
   // User.findById(id).then((user) => {
-    cb(null, user)
+  cb(null, user)
   // });
 });
 
-app.use(expressSession({secret: process.env.EXPRESS_KEY, resave: true, saveUninitialized: true}));
+app.use(express.static('build'));
+app.use(expressSession({ secret: process.env.EXPRESS_KEY, resave: true, saveUninitialized: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -38,9 +39,9 @@ app.get('/profile', isLoggedIn, (req, res) => res.send('this is the exclusive se
 
 app.get('/login/github/return',
   passport.authenticate('github', { failureRedirect: '/login' }),
-  function(req, res) {
+  function (req, res) {
     if (isLoggedIn) res.redirect('/profile')
-});
+  });
 
 app.get('/logout', (req, res) => {
   req.logout();
@@ -49,7 +50,7 @@ app.get('/logout', (req, res) => {
 });
 
 function isLoggedIn(req, res, next) {
-  if(req.isAuthenticated()) return next();
+  if (req.isAuthenticated()) return next();
   res.redirect('/')
 }
 
@@ -62,6 +63,6 @@ app.use((req, res) => res.status(404).send('error!'));
 
 app.listen(3000, () => console.log('listening at port 3000...'));
 
-logRequest = function({ body, headers, query, cookies }) {
+logRequest = function ({ body, headers, query, cookies }) {
   console.log({ body, headers, query, cookies })
 }
