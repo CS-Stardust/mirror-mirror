@@ -6,6 +6,7 @@ import {
   Switch
 } from 'react-router-dom';
 import './App.css';
+import InterviewIndex from './components/InterviewIndex';
 import InterviewForm from './components/InterviewForm';
 import InterviewDetail from './components/InterviewDetail';
 import dummyDetail from './sampleInterview';
@@ -18,11 +19,13 @@ class App extends Component {
           <header className="App-header">
             <Link to="/"><h1 className="App-title">Mirror Mirror</h1></Link>
             <nav>
+              <Link to="/interviews">View all Interviews</Link>
               <Link to="/interviews/new">Add an Interview</Link>
               <Link to="/interviews/sample">View Sample Interview</Link>
             </nav>
           </header>
           <Switch>
+            <Route exact path="/interviews" component={InterviewIndex} />
             <Route exact path="/interviews/new" component={InterviewForm} />
             <Route
               path="/interviews/:id"
