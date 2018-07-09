@@ -1,52 +1,114 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
 
+class OptionButtons extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      custom: false,
+      value: props.value,
+    };
+    this.buttonList = [...props.options];
+    if (props.allowCustom) this.buttonList.push('Other');
 
-const standardizedBorderRadius = (idx, length) => ({
-  borderTopLeftRadius: idx === 0 ? 4 : 0,
-  borderTopRightRadius: idx === length - 1 ? 4 : 0,
-  borderBottomRightRadius: idx === length - 1 ? 4 : 0,
-  borderBottomLeftRadius: idx === 0 ? 4 : 0,
-});
-
-const cleanBorderSides = (idx, length) => {
-  if (idx === 0) {
-    return { borderRight: 0 };
+    this.handleValue = this.handleValue.bind(this);
+    this.handleCustomOn = this.handleCustomOn.bind(this);
+    this.handleButton = this.handleButton.bind(this);
+    this.thunkValue = this.thunkValue.bind(this);
   }
-  if (idx === length - 1) {
-    return { borderLeft: 0 };
-  }
-  return { borderRight: 0, borderLeft: 0 };
-};
 
-const OptionButtons = ({
-  label,
-  value,
-  thunkChange,
-  options,
-  required,
-  style,
-}) => (
-  <div style={style} className="option-buttons">
-    <Typography variant="title">{label}{required && '*'}</Typography>
-    {options.map((option, idx, { length }) => (
-      <Button
-        variant="outlined"
-        key={option}
-        style={{
-          backgroundColor: option === value ? '#d4d4d4' : '#f4f4f4',
-          transition: 'none',
-          ...standardizedBorderRadius(idx, length),
-          ...cleanBorderSides(idx, length),
-        }}
-        onClick={thunkChange(option)}
-        disableRipple
-      >
-        {option}
-      </Button>
-    ))}
-  </div>
-);
+  componentDidUpdate() {
+    if (this.props.value !== this.state.value) {
+      this.props.onChange(this.state.value);
+    }
+  }
+
+  handleValue(event) {
+    this.setState({ value: event.target.value });
+  }
+
+  handleCustomOn() {
+    this.setState({
+      value: '',
+      custom: true,
+    });
+  }
+
+  handleButton(option) {
+    return () => this.setState({
+      value: option,
+      custom: false,
+    });
+  }
+
+  thunkValue(option) {
+    if (option === 'Other') {
+      return this.handleCustomOn;
+    }
+    return this.handleButton(option);
+  }
+
+  render() {
+    const {
+      label,
+      value,
+      required,
+      style,
+      size,
+    } = this.props;
+    return (
+      <div style={style} className="option-buttons">
+        <Typography
+          style={{ marginBottom: '0.5em' }}
+          variant="subheading"
+        >
+          {label}{required && '*'}
+        </Typography>
+        <div
+          style={{
+            backgroundColor: '#f4f4f4',
+            border: '1px solid rgb(0,0,0,0.23)',
+            borderRadius: 4,
+            marginBottom: '1em',
+          }}
+          className="one-line"
+        >
+          {this.buttonList.map((option) => {
+            const selected = value === option
+              || (this.state.custom && option === 'Other');
+            return (
+              <Button
+                size={size || 'medium'}
+                variant="outlined"
+                key={option}
+                style={{
+                  backgroundColor: selected ? '#d4d4d4' : '#f4f4f4',
+                  transition: 'none',
+                  border: 0,
+                  borderRadius: 0,
+                  textTransform: 'none',
+                }}
+                onClick={this.thunkValue(option)}
+                disableRipple
+              >
+                {option}
+              </Button>
+            );
+          })}
+        </div>
+        {this.state.custom &&
+          <TextField
+            value={this.state.value}
+            onChange={this.handleValue}
+            fullWidth
+            autoFocus
+          />
+        }
+      </div>
+    );
+  }
+}
 
 export default OptionButtons;
