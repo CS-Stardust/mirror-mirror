@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import InterviewRow from './InterviewRow';
+import Table from '@material-ui/core/Table';
+import TableHead from '@material-ui/core/TableHead';
+import TableBody from '@material-ui/core/TableBody';
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
+import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom';
 import dummyDetail from '../sampleInterview';
 
 const deserializer = interview => ({
@@ -32,12 +38,34 @@ export default class InterviewIndex extends Component {
 
   render() {
     return (
-      <div>
-        {
-          this.state.list.map((item, idx) =>
-            <InterviewRow key={idx} {...item} />)
-        }
-      </div>
+      <Table className="interview-index">
+        <TableHead>
+          <TableRow>
+            <TableCell>Company</TableCell>
+            <TableCell>Position</TableCell>
+            <TableCell>Posted by</TableCell>
+            <TableCell># of Questions</TableCell>
+            <TableCell>Link</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {
+            this.state.list.map((item, idx) => (
+              <TableRow key={idx}>
+                <TableCell>{item.company}</TableCell>
+                <TableCell>{item.position}</TableCell>
+                <TableCell>{item.displayName}</TableCell>
+                <TableCell>{item.questionCount}</TableCell>
+                <TableCell>
+                  <Link to={`interviews/${idx}`}>
+                    <Button variant="contained" color="primary">Go</Button>
+                  </Link>
+                </TableCell>
+              </TableRow>
+            ))
+          }
+        </TableBody>
+      </Table>
     );
   }
 }

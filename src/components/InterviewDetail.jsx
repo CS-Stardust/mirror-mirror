@@ -15,13 +15,13 @@ const InterviewDetail = props => (
     <ul>
       {
         props.questions.map(question =>
-          <li>{question}</li>)
+          <li key={question}>{question}</li>)
       }
     </ul>
     <h2>Additional Notes</h2>
     {
       props.notes.split(/\n+/).map(line =>
-        <p>{line}</p>)
+        <p key={line}>{line}</p>)
     }
   </div>
 );
