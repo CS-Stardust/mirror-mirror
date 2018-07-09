@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const app = express();
 const passport = require('passport');
 const Strategy = require('passport-github').Strategy;
@@ -13,7 +14,6 @@ passport.use(new Strategy ({
   callbackURL: 'http://localhost:3000/login/github/return'
 },
   function(accessToken, refreshToken, profile, cb) {
-    console.log(Object.keys(profile));
     return cb(null, profile);
 }));
 
@@ -31,27 +31,25 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('/', (req, res) => res.send('we are connected!'));
-app.get('/login', (req, res) => res.send('regular login here'));
-app.get('/login/github', passport.authenticate('github'));
-app.get('/profile', isLoggedIn, (req, res) => res.send('this is the exclusive secret page for logged-in codesmith alumni only'));
+app.get('/login/github', passport.authenticate('github', { scope: 'read:org' }));
 
 app.get('/login/github/return',
-  passport.authenticate('github', { failureRedirect: '/login' }),
-  function(req, res) {
-    if (isLoggedIn) res.redirect('/profile')
-});
+  passport.authenticate('github', { failureRedirect: '/error' }),
+  function(req, res, next) {
+    res.status(200);
+    res.setHeader('Content-Type', 'text/html');
+    res.sendFile(path.join(__dirname + '/../build/index.html'));
+  }
+);
 
-app.get('/logout', (req, res) => {
-  req.logout();
-  passport.user = null;
-  res.redirect('/');
-});
+app.use(express.static('build'));
 
-function isLoggedIn(req, res, next) {
-  if(req.isAuthenticated()) return next();
-  res.redirect('/')
-}
+//logout is not working properly
+// app.get('/logout', (req, res) => {
+//   req.logout();
+//   req.user = null;
+//   res.send('logged out');
+// });
 
 app.post('/test', (req, res) => {
   logRequest(req);
