@@ -25,7 +25,6 @@ const serializeForm = state => ({
 
 export default class InterviewForm extends Component {
   constructor(props) {
-
     super(props);
 
     this.state = {
@@ -48,7 +47,6 @@ export default class InterviewForm extends Component {
     this.handleRemoveQuestion = this.handleRemoveQuestion.bind(this);
     this.submitForm = this.submitForm.bind(this);
   }
-
 
   handleCompany(event) {
     this.setState({ company: event.target.value });
@@ -110,31 +108,9 @@ export default class InterviewForm extends Component {
 
   render() {
     return (
-<<<<<<< HEAD
       <MuiThemeProvider theme={theme}>
         <form className="interview-form">
-          <OptionButtons
-            style={listStyles}
-            label="What sort of position did you apply for?"
-            value={this.state.position}
-            thunkChange={this.thunkPosition}
-            options={[
-              'Full Stack',
-              'Front End',
-              'Back End',
-              'DevOps',
-            ]}
-=======
-      <form className="interview-form">
-        <div style={listStyles} className="one-line">
-          <TextField
-            label="Company"
-            value={this.state.company}
-            onChange={this.handleCompany}
->>>>>>> master
-            required
-          />
-          <div style={listStyles} className="two-fields">
+          <div style={listStyles} className="one-line">
             <TextField
               label="Company"
               value={this.state.company}
@@ -148,6 +124,34 @@ export default class InterviewForm extends Component {
               onChange={this.handleDate}
             />
           </div>
+          <OptionButtons
+            style={listStyles}
+            label="What sort of position did you apply for?"
+            value={this.state.position}
+            onChange={this.capturePosition}
+            options={[
+              'Full Stack',
+              'Front End',
+              'Back End',
+              'DevOps',
+            ]}
+            required
+            allowCustom
+          />
+          <OptionButtons
+            style={listStyles}
+            label="What kind of interview was it?"
+            value={this.state.type}
+            onChange={this.captureType}
+            options={[
+              'On-site',
+              'Phone/video chat',
+              'Coding challenge',
+              'Take-home',
+            ]}
+            required
+            allowCustom
+          />
           <ListField
             style={listStyles}
             subheader="Questions"
@@ -158,6 +162,7 @@ export default class InterviewForm extends Component {
             onAdd={this.handleAddQuestion}
             onRemove={this.handleRemoveQuestion}
             multiline
+            required
           />
           <TextField
             style={listStyles}
@@ -167,73 +172,15 @@ export default class InterviewForm extends Component {
             fullWidth
             multiline
           />
-<<<<<<< HEAD
           <Button
             onClick={this.submitForm}
             variant="contained"
             color="primary"
           >
             Submit
-=======
-        </div>
-        <OptionButtons
-          style={listStyles}
-          label="What sort of position did you apply for?"
-          value={this.state.position}
-          onChange={this.capturePosition}
-          options={[
-            'Full Stack',
-            'Front End',
-            'Back End',
-            'DevOps',
-          ]}
-          required
-          allowCustom
-        />
-        <OptionButtons
-          style={listStyles}
-          label="What kind of interview was it?"
-          value={this.state.type}
-          onChange={this.captureType}
-          options={[
-            'On-site',
-            'Phone/video chat',
-            'Coding challenge',
-            'Take-home',
-          ]}
-          required
-          allowCustom
-        />
-        <ListField
-          style={listStyles}
-          subheader="Questions"
-          label="What questions were most notable?"
-          fieldValue={this.state.question}
-          listValues={this.state.questionList}
-          onChange={this.handleQuestion}
-          onAdd={this.handleAddQuestion}
-          onRemove={this.handleRemoveQuestion}
-          multiline
-          required
-        />
-        <TextField
-          style={listStyles}
-          label="General notes"
-          value={this.state.notes}
-          onChange={this.handleNotes}
-          fullWidth
-          multiline
-        />
-        <Button
-          onClick={this.submitForm}
-          variant="contained"
-          color="primary"
-        >
-          Submit
->>>>>>> master
         </Button>
         </form>
-      </MuiThemeProvider>
+      </MuiThemeProvider >
     );
   }
 }
