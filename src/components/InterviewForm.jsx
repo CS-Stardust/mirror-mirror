@@ -35,8 +35,8 @@ export default class InterviewForm extends Component {
     };
 
     this.handleCompany = this.handleCompany.bind(this);
-    this.thunkType = this.thunkType.bind(this);
-    this.thunkPosition = this.thunkPosition.bind(this);
+    this.captureType = this.captureType.bind(this);
+    this.capturePosition = this.capturePosition.bind(this);
     this.handleNotes = this.handleNotes.bind(this);
     this.handleQuestion = this.handleQuestion.bind(this);
     this.handleDate = this.handleDate.bind(this);
@@ -49,12 +49,12 @@ export default class InterviewForm extends Component {
     this.setState({ company: event.target.value });
   }
 
-  thunkType(option) {
-    return () => this.setState({ type: option });
+  captureType(option) {
+    this.setState({ type: option });
   }
 
-  thunkPosition(option) {
-    return () => this.setState({ position: option });
+  capturePosition(option) {
+    this.setState({ position: option });
   }
 
   handleNotes(event) {
@@ -123,7 +123,7 @@ export default class InterviewForm extends Component {
           style={listStyles}
           label="What sort of position did you apply for?"
           value={this.state.position}
-          thunkChange={this.thunkPosition}
+          onChange={this.capturePosition}
           options={[
             'Full Stack',
             'Front End',
@@ -131,13 +131,13 @@ export default class InterviewForm extends Component {
             'DevOps',
           ]}
           required
-          allowOther
+          allowCustom
         />
         <OptionButtons
           style={listStyles}
           label="What kind of interview was it?"
           value={this.state.type}
-          thunkChange={this.thunkType}
+          onChange={this.captureType}
           options={[
             'On-site',
             'Phone/video chat',
@@ -145,7 +145,7 @@ export default class InterviewForm extends Component {
             'Take-home',
           ]}
           required
-          allowOther
+          allowCustom
         />
         <ListField
           style={listStyles}
