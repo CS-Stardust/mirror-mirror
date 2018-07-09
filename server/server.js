@@ -24,7 +24,7 @@ passport.deserializeUser((user, cb) => {
   // });
 });
 
-app.use(express.static('build'));
+
 app.use(expressSession({ secret: process.env.EXPRESS_KEY, resave: true, saveUninitialized: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -32,25 +32,14 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('/login/github', passport.authenticate('github', { scope: 'read:org' }));
-
 app.get('/login/github/return',
   passport.authenticate('github', { failureRedirect: '/error' }),
   function(req, res, next) {
-    res.status(200);
-    res.setHeader('Content-Type', 'text/html');
     res.sendFile(path.join(__dirname + '/../build/index.html'));
   }
 );
-
+app.get('/', passport.authenticate('github', { failureRedirect: '/error' }))
 app.use(express.static('build'));
-
-//logout is not working properly
-// app.get('/logout', (req, res) => {
-//   req.logout();
-//   req.user = null;
-//   res.send('logged out');
-// });
 
 app.post('/test', (req, res) => {
   logRequest(req);
