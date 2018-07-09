@@ -32,9 +32,13 @@ h1, h2, h3 {
   text-align: center;
 }
 
-.two-fields {
+.one-line {
   display: flex;
   justify-content: space-between;
+}
+
+.list-field {
+  margin-bottom: 1em;
 }
 
 .secondary-text {
@@ -44,4 +48,3 @@ h1, h2, h3 {
 .secondary-text::after {
   content: " | ";
 }
-
