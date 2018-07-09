@@ -6,19 +6,16 @@ const bodyParser = require('body-parser');
 const expressSession = require('express-session');
 
 require('dotenv').config();
-passport.use(new Strategy({
-  clientID: process.env.GITHUB_CLIENT_ID, clientSecret: process.env.GITHUB_CLIENT_SECRET, callbackURL: 'http://localhost:3000/login/github/return'
-}
 
 passport.use(new Strategy({
-    clientID: process.env.GITHUB_CLIENT_ID,
-    clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL: 'http://localhost:3000/login/github/return'
-  },
-    function (accessToken, refreshToken, profile, cb) {
-      console.log(Object.keys(profile));
-      return cb(null, profile);
-    }));
+  clientID: process.env.GITHUB_CLIENT_ID,
+  clientSecret: process.env.GITHUB_CLIENT_SECRET,
+  callbackURL: 'http://localhost:3000/login/github/return'
+},
+  function (accessToken, refreshToken, profile, cb) {
+    console.log(Object.keys(profile));
+    return cb(null, profile);
+  }));
 
 passport.serializeUser((user, cb) => cb(null, user.id));
 passport.deserializeUser((user, cb) => {
@@ -27,14 +24,14 @@ passport.deserializeUser((user, cb) => {
   // });
 });
 
+app.use(express.static('build'));
 app.use(expressSession({ secret: process.env.EXPRESS_KEY, resave: true, saveUninitialized: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-));
-app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
+
 app.get('/', (req, res) => res.send('we are connected!'));
 app.get('/login', (req, res) => res.send('regular login here'));
 app.get('/login/github', passport.authenticate('github'));

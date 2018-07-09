@@ -16,12 +16,13 @@ class App extends Component {
       <Router>
         <div className="App">
           <header className="App-header">
+            <img src="./cs-logo.png" alt="Codesmith logo" />
             <Link to="/"><h1 className="App-title">Mirror Mirror</h1></Link>
-            <nav>
-              <Link to="/interviews/new">Add an Interview</Link>
-              <Link to="/interviews/sample">View Sample Interview</Link>
-            </nav>
           </header>
+          <nav>
+            <Link to="/interviews/new">Add an Interview</Link>
+            <Link to="/interviews/sample">View Sample Interview</Link>
+          </nav>
           <Switch>
             <Route exact path="/interviews/new" component={InterviewForm} />
             <Route
