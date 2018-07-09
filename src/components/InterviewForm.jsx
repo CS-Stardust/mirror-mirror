@@ -1,3 +1,4 @@
+/* globals document */
 import React, { Component } from 'react';
 import axios from 'axios';
 import TextField from '@material-ui/core/TextField';
@@ -14,6 +15,7 @@ const listStyles = {
 const serializeForm = state => ({
   company: state.company,
   position: state.position,
+  type: state.type,
   notes: state.notes,
   questions: state.questionList.map(val => val.question),
   date: state.date,
@@ -26,6 +28,7 @@ export default class InterviewForm extends Component {
     this.state = {
       company: '',
       position: 'Full Stack',
+      type: 'On-site',
       notes: '',
       question: '',
       questionList: [],
@@ -33,7 +36,8 @@ export default class InterviewForm extends Component {
     };
 
     this.handleCompany = this.handleCompany.bind(this);
-    this.thunkPosition = this.thunkPosition.bind(this);
+    this.captureType = this.captureType.bind(this);
+    this.capturePosition = this.capturePosition.bind(this);
     this.handleNotes = this.handleNotes.bind(this);
     this.handleQuestion = this.handleQuestion.bind(this);
     this.handleDate = this.handleDate.bind(this);
@@ -46,8 +50,12 @@ export default class InterviewForm extends Component {
     this.setState({ company: event.target.value });
   }
 
-  thunkPosition(option) {
-    return () => this.setState({ position: option });
+  captureType(option) {
+    this.setState({ type: option });
+  }
+
+  capturePosition(option) {
+    this.setState({ position: option });
   }
 
   handleNotes(event) {
@@ -59,17 +67,20 @@ export default class InterviewForm extends Component {
   }
 
   handleAddQuestion() {
-    this.setState({
-      questionList: [
-        ...this.state.questionList,
-        {
-          question: this.state.question,
-          id: questionCounter,
-        },
-      ],
-      question: '',
-    });
-    questionCounter += 1;
+    document.getElementById('question-field').focus();
+    if (this.state.question !== '') {
+      this.setState({
+        questionList: [
+          ...this.state.questionList,
+          {
+            question: this.state.question,
+            id: questionCounter,
+          },
+        ],
+        question: '',
+      });
+      questionCounter += 1;
+    }
   }
 
   handleRemoveQuestion(event) {
@@ -96,20 +107,7 @@ export default class InterviewForm extends Component {
   render() {
     return (
       <form className="interview-form">
-        <OptionButtons
-          style={listStyles}
-          label="What sort of position did you apply for?"
-          value={this.state.position}
-          thunkChange={this.thunkPosition}
-          options={[
-            'Full Stack',
-            'Front End',
-            'Back End',
-            'DevOps',
-          ]}
-          required
-        />
-        <div style={listStyles} className="two-fields">
+        <div style={listStyles} className="one-line">
           <TextField
             label="Company"
             value={this.state.company}
@@ -123,6 +121,34 @@ export default class InterviewForm extends Component {
             onChange={this.handleDate}
           />
         </div>
+        <OptionButtons
+          style={listStyles}
+          label="What sort of position did you apply for?"
+          value={this.state.position}
+          onChange={this.capturePosition}
+          options={[
+            'Full Stack',
+            'Front End',
+            'Back End',
+            'DevOps',
+          ]}
+          required
+          allowCustom
+        />
+        <OptionButtons
+          style={listStyles}
+          label="What kind of interview was it?"
+          value={this.state.type}
+          onChange={this.captureType}
+          options={[
+            'On-site',
+            'Phone/video chat',
+            'Coding challenge',
+            'Take-home',
+          ]}
+          required
+          allowCustom
+        />
         <ListField
           style={listStyles}
           subheader="Questions"
@@ -133,6 +159,7 @@ export default class InterviewForm extends Component {
           onAdd={this.handleAddQuestion}
           onRemove={this.handleRemoveQuestion}
           multiline
+          required
         />
         <TextField
           style={listStyles}
