@@ -6,6 +6,10 @@ const Strategy = require('passport-github').Strategy;
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const expressSession = require('express-session');
+const controllers = require('./controllers/index.js');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 require('dotenv').config();
 
@@ -38,21 +42,26 @@ app.get('/login/github', passport.authenticate('github'));
 app.get('/welcome', 
   passport.authenticate('github', { failureRedirect: '/login' }),
   function(req, res) {
+    
     res.redirect('/')
 });
 
 app.get('/profile', (req, res) => res.send('require login, render user profile/form page'))
 
 
-app.post('/test', (req, res) => {
+app.post('/interview', (req, res) => {
+
+  //method will create a new interview entry witin the database 
+  controllers.interview.create(req.body);
+  
   logRequest(req);
   res.end();
 })
 app.use((req, res) => res.status(404).send('error!'));
 
-
+//check to see if database is actually run correctly
 app.listen(3000, () => console.log('listening at port 3000...'));
 
 logRequest = function({ body, headers, query, cookies }) {
-  console.log({ body, headers, query, cookies })
+  //console.log('I am log request at the bottom of server.js: -->>>',{ body, headers, query, cookies })
 }

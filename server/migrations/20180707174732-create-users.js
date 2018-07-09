@@ -8,20 +8,20 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      github_Username: {
+      github_username: {
         allowNull: false,
         type: Sequelize.STRING
       },
-      github_DisplayName: {
+      github_displayName: {
         type: Sequelize.STRING
       },
       email: {
         type: Sequelize.STRING
       },
-      accessToken: {
+      access_token: {
         type: Sequelize.STRING
       },
-      profilePic: {
+      profile_pic: {
         type: Sequelize.STRING
       },
       createdAt: {

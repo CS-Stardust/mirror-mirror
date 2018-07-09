@@ -15,16 +15,13 @@ module.exports = {
          type: Sequelize.STRING
        },
        position: {
-         type: Sequlize.STRING
+         type: Sequelize.STRING
        },
        notes: {
          type: Sequelize.STRING
        },
-       interviewDate: {
-        type:Sequelize.DATE
-      },
-      interviewID: {
-        type: Sequelize.INTEGER
+       interview_date: {
+        type:Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

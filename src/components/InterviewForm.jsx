@@ -88,7 +88,7 @@ export default class InterviewForm extends Component {
 
   submitForm() {
     console.log(serializeForm(this.state));
-    axios.post('/test', serializeForm(this.state))
+    axios.post('/interview', serializeForm(this.state))
       .then(console.log)
       .catch(console.error);
   }
