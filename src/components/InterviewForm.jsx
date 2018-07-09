@@ -14,6 +14,7 @@ const listStyles = {
 const serializeForm = state => ({
   company: state.company,
   position: state.position,
+  type: state.type,
   notes: state.notes,
   questions: state.questionList.map(val => val.question),
   date: state.date,
@@ -26,6 +27,7 @@ export default class InterviewForm extends Component {
     this.state = {
       company: '',
       position: 'Full Stack',
+      type: 'On-site',
       notes: '',
       question: '',
       questionList: [],
@@ -33,6 +35,7 @@ export default class InterviewForm extends Component {
     };
 
     this.handleCompany = this.handleCompany.bind(this);
+    this.thunkType = this.thunkType.bind(this);
     this.thunkPosition = this.thunkPosition.bind(this);
     this.handleNotes = this.handleNotes.bind(this);
     this.handleQuestion = this.handleQuestion.bind(this);
@@ -44,6 +47,10 @@ export default class InterviewForm extends Component {
 
   handleCompany(event) {
     this.setState({ company: event.target.value });
+  }
+
+  thunkType(option) {
+    return () => this.setState({ type: option });
   }
 
   thunkPosition(option) {
@@ -59,17 +66,19 @@ export default class InterviewForm extends Component {
   }
 
   handleAddQuestion() {
-    this.setState({
-      questionList: [
-        ...this.state.questionList,
-        {
-          question: this.state.question,
-          id: questionCounter,
-        },
-      ],
-      question: '',
-    });
-    questionCounter += 1;
+    if (this.state.question !== '') {
+      this.setState({
+        questionList: [
+          ...this.state.questionList,
+          {
+            question: this.state.question,
+            id: questionCounter,
+          },
+        ],
+        question: '',
+      });
+      questionCounter += 1;
+    }
   }
 
   handleRemoveQuestion(event) {
@@ -96,20 +105,7 @@ export default class InterviewForm extends Component {
   render() {
     return (
       <form className="interview-form">
-        <OptionButtons
-          style={listStyles}
-          label="What sort of position did you apply for?"
-          value={this.state.position}
-          thunkChange={this.thunkPosition}
-          options={[
-            'Full Stack',
-            'Front End',
-            'Back End',
-            'DevOps',
-          ]}
-          required
-        />
-        <div style={listStyles} className="two-fields">
+        <div style={listStyles} className="one-line">
           <TextField
             label="Company"
             value={this.state.company}
@@ -123,6 +119,34 @@ export default class InterviewForm extends Component {
             onChange={this.handleDate}
           />
         </div>
+        <OptionButtons
+          style={listStyles}
+          label="What sort of position did you apply for?"
+          value={this.state.position}
+          thunkChange={this.thunkPosition}
+          options={[
+            'Full Stack',
+            'Front End',
+            'Back End',
+            'DevOps',
+          ]}
+          required
+          allowOther
+        />
+        <OptionButtons
+          style={listStyles}
+          label="What kind of interview was it?"
+          value={this.state.type}
+          thunkChange={this.thunkType}
+          options={[
+            'On-site',
+            'Phone/video chat',
+            'Coding challenge',
+            'Take-home',
+          ]}
+          required
+          allowOther
+        />
         <ListField
           style={listStyles}
           subheader="Questions"
@@ -133,6 +157,7 @@ export default class InterviewForm extends Component {
           onAdd={this.handleAddQuestion}
           onRemove={this.handleRemoveQuestion}
           multiline
+          required
         />
         <TextField
           style={listStyles}

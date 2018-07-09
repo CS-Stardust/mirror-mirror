@@ -13,21 +13,26 @@ const ListField = ({
   onAdd,
   onRemove,
   multiline,
+  required,
+  style,
 }) => (
-  <div>
+  <div style={style} className="list-field">
     <ClearableList
       subheader={subheader}
       listValues={listValues}
       onRemove={onRemove}
     />
-    <TextField
-      label={label}
-      value={fieldValue}
-      onChange={onChange}
-      multiline={multiline}
-      fullWidth
-    />
-    <IconButton onClick={onAdd} color="secondary"><AddIcon /></IconButton>
+    <div style={{ display: 'flex' }}>
+      <TextField
+        label={label}
+        value={fieldValue}
+        onChange={onChange}
+        multiline={multiline}
+        required={required}
+        fullWidth
+      />
+      <IconButton onClick={onAdd} color="secondary"><AddIcon /></IconButton>
+    </div>
   </div>
 );
 
