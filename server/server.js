@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const app = express();
 const passport = require('passport');
 const Strategy = require('passport-github').Strategy;
@@ -12,8 +13,7 @@ passport.use(new Strategy({
   clientSecret: process.env.GITHUB_CLIENT_SECRET,
   callbackURL: 'http://localhost:3000/login/github/return'
 },
-  function (accessToken, refreshToken, profile, cb) {
-    console.log(Object.keys(profile));
+  function(accessToken, refreshToken, profile, cb) {
     return cb(null, profile);
   }));
 
@@ -24,7 +24,7 @@ passport.deserializeUser((user, cb) => {
   // });
 });
 
-app.use(express.static('build'));
+
 app.use(expressSession({ secret: process.env.EXPRESS_KEY, resave: true, saveUninitialized: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -32,27 +32,14 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('/', (req, res) => res.send('we are connected!'));
-app.get('/login', (req, res) => res.send('regular login here'));
-app.get('/login/github', passport.authenticate('github'));
-app.get('/profile', isLoggedIn, (req, res) => res.send('this is the exclusive secret page for logged-in codesmith alumni only'));
-
 app.get('/login/github/return',
-  passport.authenticate('github', { failureRedirect: '/login' }),
-  function (req, res) {
-    if (isLoggedIn) res.redirect('/profile')
-  });
-
-app.get('/logout', (req, res) => {
-  req.logout();
-  passport.user = null;
-  res.redirect('/');
-});
-
-function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated()) return next();
-  res.redirect('/')
-}
+  passport.authenticate('github', { failureRedirect: '/error' }),
+  function(req, res, next) {
+    res.sendFile(path.join(__dirname + '/../build/index.html'));
+  }
+);
+app.get('/', passport.authenticate('github', { failureRedirect: '/error' }))
+app.use(express.static('build'));
 
 app.post('/test', (req, res) => {
   logRequest(req);
