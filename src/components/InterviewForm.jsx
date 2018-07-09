@@ -5,6 +5,8 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import OptionButtons from './OptionButtons';
 import ListField from './ListField';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import theme from '../theme';
 
 let questionCounter = 0;
 
@@ -106,77 +108,79 @@ export default class InterviewForm extends Component {
 
   render() {
     return (
-      <form className="interview-form">
-        <div style={listStyles} className="one-line">
-          <TextField
-            label="Company"
-            value={this.state.company}
-            onChange={this.handleCompany}
+      <MuiThemeProvider theme={theme}>
+        <form className="interview-form">
+          <div style={listStyles} className="one-line">
+            <TextField
+              label="Company"
+              value={this.state.company}
+              onChange={this.handleCompany}
+              required
+            />
+            <TextField
+              label="Date"
+              type="date"
+              value={this.state.date}
+              onChange={this.handleDate}
+            />
+          </div>
+          <OptionButtons
+            style={listStyles}
+            label="What sort of position did you apply for?"
+            value={this.state.position}
+            onChange={this.capturePosition}
+            options={[
+              'Full Stack',
+              'Front End',
+              'Back End',
+              'DevOps',
+            ]}
+            required
+            allowCustom
+          />
+          <OptionButtons
+            style={listStyles}
+            label="What kind of interview was it?"
+            value={this.state.type}
+            onChange={this.captureType}
+            options={[
+              'On-site',
+              'Phone/video chat',
+              'Coding challenge',
+              'Take-home',
+            ]}
+            required
+            allowCustom
+          />
+          <ListField
+            style={listStyles}
+            subheader="Questions"
+            label="What questions were most notable?"
+            fieldValue={this.state.question}
+            listValues={this.state.questionList}
+            onChange={this.handleQuestion}
+            onAdd={this.handleAddQuestion}
+            onRemove={this.handleRemoveQuestion}
+            multiline
             required
           />
           <TextField
-            label="Date"
-            type="date"
-            value={this.state.date}
-            onChange={this.handleDate}
+            style={listStyles}
+            label="General notes"
+            value={this.state.notes}
+            onChange={this.handleNotes}
+            fullWidth
+            multiline
           />
-        </div>
-        <OptionButtons
-          style={listStyles}
-          label="What sort of position did you apply for?"
-          value={this.state.position}
-          onChange={this.capturePosition}
-          options={[
-            'Full Stack',
-            'Front End',
-            'Back End',
-            'DevOps',
-          ]}
-          required
-          allowCustom
-        />
-        <OptionButtons
-          style={listStyles}
-          label="What kind of interview was it?"
-          value={this.state.type}
-          onChange={this.captureType}
-          options={[
-            'On-site',
-            'Phone/video chat',
-            'Coding challenge',
-            'Take-home',
-          ]}
-          required
-          allowCustom
-        />
-        <ListField
-          style={listStyles}
-          subheader="Questions"
-          label="What questions were most notable?"
-          fieldValue={this.state.question}
-          listValues={this.state.questionList}
-          onChange={this.handleQuestion}
-          onAdd={this.handleAddQuestion}
-          onRemove={this.handleRemoveQuestion}
-          multiline
-          required
-        />
-        <TextField
-          style={listStyles}
-          label="General notes"
-          value={this.state.notes}
-          onChange={this.handleNotes}
-          fullWidth
-          multiline
-        />
-        <Button
-          onClick={this.submitForm}
-          variant="contained"
-          color="primary"
-        >
-          Submit
+          <Button
+            onClick={this.submitForm}
+            variant="contained"
+            color="primary"
+          >
+            Submit
         </Button>
-      </form>
+        </form>
+      </MuiThemeProvider >
     );
   }
 }
