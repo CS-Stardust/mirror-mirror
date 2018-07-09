@@ -24,6 +24,7 @@ const ListField = ({
     />
     <div style={{ display: 'flex' }}>
       <TextField
+        id="question-field"
         label={label}
         value={fieldValue}
         onChange={onChange}

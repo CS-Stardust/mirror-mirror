@@ -71,33 +71,39 @@ class OptionButtons extends Component {
             backgroundColor: '#f4f4f4',
             border: '1px solid rgb(0,0,0,0.23)',
             borderRadius: 4,
+            marginBottom: '1em',
           }}
           className="one-line"
         >
-          {this.buttonList.map(option => (
-            <Button
-              size={size || 'medium'}
-              variant="outlined"
-              key={option}
-              style={{
-                backgroundColor: value === option ? '#d4d4d4' : '#f4f4f4',
-                transition: 'none',
-                border: 0,
-                borderRadius: 0,
-                textTransform: 'none',
-              }}
-              onClick={this.thunkValue(option)}
-              disableRipple
-            >
-              {option}
-            </Button>
-          ))}
+          {this.buttonList.map((option) => {
+            const selected = value === option
+              || (this.state.custom && option === 'Other');
+            return (
+              <Button
+                size={size || 'medium'}
+                variant="outlined"
+                key={option}
+                style={{
+                  backgroundColor: selected ? '#d4d4d4' : '#f4f4f4',
+                  transition: 'none',
+                  border: 0,
+                  borderRadius: 0,
+                  textTransform: 'none',
+                }}
+                onClick={this.thunkValue(option)}
+                disableRipple
+              >
+                {option}
+              </Button>
+            );
+          })}
         </div>
         {this.state.custom &&
           <TextField
             value={this.state.value}
             onChange={this.handleValue}
             fullWidth
+            autoFocus
           />
         }
       </div>
