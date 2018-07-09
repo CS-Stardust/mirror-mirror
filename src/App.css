@@ -6,11 +6,17 @@
 }
 
 .App-header {
-  background-color: #222;
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  background-color: #f7f7f7;
   padding: 20px;
-  color: white;
+  color: #34495e;
   margin-bottom: 2em;
   width: 100%;
+}
+
+.App-header>img {
+  padding-left: 20px;
 }
 
 .App-title {
@@ -22,6 +28,10 @@
 }
 
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

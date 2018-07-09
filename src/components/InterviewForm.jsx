@@ -4,6 +4,8 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import OptionButtons from './OptionButtons';
 import ListField from './ListField';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import theme from '../theme';
 
 let questionCounter = 0;
 
@@ -21,6 +23,7 @@ const serializeForm = state => ({
 
 export default class InterviewForm extends Component {
   constructor(props) {
+
     super(props);
 
     this.state = {
@@ -41,6 +44,7 @@ export default class InterviewForm extends Component {
     this.handleRemoveQuestion = this.handleRemoveQuestion.bind(this);
     this.submitForm = this.submitForm.bind(this);
   }
+
 
   handleCompany(event) {
     this.setState({ company: event.target.value });
@@ -95,61 +99,63 @@ export default class InterviewForm extends Component {
 
   render() {
     return (
-      <form className="interview-form">
-        <OptionButtons
-          style={listStyles}
-          label="What sort of position did you apply for?"
-          value={this.state.position}
-          thunkChange={this.thunkPosition}
-          options={[
-            'Full Stack',
-            'Front End',
-            'Back End',
-            'DevOps',
-          ]}
-          required
-        />
-        <div style={listStyles} className="two-fields">
-          <TextField
-            label="Company"
-            value={this.state.company}
-            onChange={this.handleCompany}
+      <MuiThemeProvider theme={theme}>
+        <form className="interview-form">
+          <OptionButtons
+            style={listStyles}
+            label="What sort of position did you apply for?"
+            value={this.state.position}
+            thunkChange={this.thunkPosition}
+            options={[
+              'Full Stack',
+              'Front End',
+              'Back End',
+              'DevOps',
+            ]}
             required
           />
-          <TextField
-            label="Date"
-            type="date"
-            value={this.state.date}
-            onChange={this.handleDate}
+          <div style={listStyles} className="two-fields">
+            <TextField
+              label="Company"
+              value={this.state.company}
+              onChange={this.handleCompany}
+              required
+            />
+            <TextField
+              label="Date"
+              type="date"
+              value={this.state.date}
+              onChange={this.handleDate}
+            />
+          </div>
+          <ListField
+            style={listStyles}
+            subheader="Questions"
+            label="What questions were most notable?"
+            fieldValue={this.state.question}
+            listValues={this.state.questionList}
+            onChange={this.handleQuestion}
+            onAdd={this.handleAddQuestion}
+            onRemove={this.handleRemoveQuestion}
+            multiline
           />
-        </div>
-        <ListField
-          style={listStyles}
-          subheader="Questions"
-          label="What questions were most notable?"
-          fieldValue={this.state.question}
-          listValues={this.state.questionList}
-          onChange={this.handleQuestion}
-          onAdd={this.handleAddQuestion}
-          onRemove={this.handleRemoveQuestion}
-          multiline
-        />
-        <TextField
-          style={listStyles}
-          label="General notes"
-          value={this.state.notes}
-          onChange={this.handleNotes}
-          fullWidth
-          multiline
-        />
-        <Button
-          onClick={this.submitForm}
-          variant="contained"
-          color="primary"
-        >
-          Submit
+          <TextField
+            style={listStyles}
+            label="General notes"
+            value={this.state.notes}
+            onChange={this.handleNotes}
+            fullWidth
+            multiline
+          />
+          <Button
+            onClick={this.submitForm}
+            variant="contained"
+            color="primary"
+          >
+            Submit
         </Button>
-      </form>
+        </form>
+      </MuiThemeProvider>
     );
   }
 }
