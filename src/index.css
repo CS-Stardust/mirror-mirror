@@ -1,12 +1,31 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: Arial, sans-serif;
 }
 
 .interview-form {
   max-width: 600px;
   text-align: left;
+}
+
+.interview-detail {
+  max-width: 600px;
+  text-align: left;
+}
+
+.one-line {
+  display: flex;
+  justify-content: space-around;
+}
+
+.one-line p, .no-margin {
+  margin: 0;
+}
+
+h1, h2, h3 {
+  text-align: center;
+  margin-top: 2em;
 }
 
 .option-buttons {
@@ -20,4 +39,12 @@ body {
 
 .list-field {
   margin-bottom: 1em;
+}
+
+.secondary-text {
+  color: #777;
+}
+
+.secondary-text::after {
+  content: " | ";
 }
