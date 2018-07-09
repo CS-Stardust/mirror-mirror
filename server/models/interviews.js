@@ -13,6 +13,7 @@ module.exports = (DataTypes) => {
     position: Sequelize.STRING,
     notes: Sequelize.STRING,
     interview_date: Sequelize.STRING,
+    type: Sequelize.STRING
     }, {});
   Interviews.associate = (models) => {
     // associations can be defined here

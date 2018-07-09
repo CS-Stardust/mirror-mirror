@@ -20,6 +20,9 @@ module.exports = {
        notes: {
          type: Sequelize.STRING
        },
+       type: {
+          type: Sequelize.STRING
+       },
        interview_date: {
         type:Sequelize.STRING
       },

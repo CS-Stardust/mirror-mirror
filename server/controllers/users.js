@@ -1,6 +1,7 @@
 const user = require('../models/users');
 
 module.exports = {
+  
   create(req, res) {
     return user().create({
         github_Username: req.github_Username,

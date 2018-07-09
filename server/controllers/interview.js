@@ -8,7 +8,8 @@ module.exports = {
       company: req.company,
       notes: req.notes,
       interview_date: req.date,
-      position: req.position 
+      position: req.position,
+      type: req.type 
     })
     // .then(interview => res.status(201).send(interview))
     // .catch(error => res.status(400).send(error)));
