@@ -8,22 +8,26 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-       user_id: {
-         type: Sequelize.INTEGER
-       },
-       company: {
-         type: Sequelize.STRING
-       },
-       position: {
-         type: Sequelize.STRING
-       },
-       notes: {
-         type: Sequelize.STRING
-       },
-       type: {
-          type: Sequelize.STRING
-       },
-       interview_date: {
+      user_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Users",
+          key: 'id'
+        }
+      },
+      company: {
+        type: Sequelize.STRING
+      },
+      position: {
+        type: Sequelize.STRING
+      },
+      notes: {
+        type: Sequelize.STRING
+      },
+      type: {
+        type: Sequelize.STRING
+      },
+      interview_date: {
         type:Sequelize.STRING
       },
       createdAt: {
