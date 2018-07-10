@@ -6,6 +6,8 @@ import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import Button from '@material-ui/core/Button';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import theme from '../theme.js';
 import { Link } from 'react-router-dom';
 import dummyDetail from '../sampleInterview';
 
@@ -38,34 +40,36 @@ export default class InterviewIndex extends Component {
 
   render() {
     return (
-      <Table className="interview-index">
-        <TableHead>
-          <TableRow>
-            <TableCell>Company</TableCell>
-            <TableCell>Position</TableCell>
-            <TableCell>Posted by</TableCell>
-            <TableCell># of Questions</TableCell>
-            <TableCell>Link</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {
-            this.state.list.map((item, idx) => (
-              <TableRow key={idx}>
-                <TableCell>{item.company}</TableCell>
-                <TableCell>{item.position}</TableCell>
-                <TableCell>{item.displayName}</TableCell>
-                <TableCell>{item.questionCount}</TableCell>
-                <TableCell>
-                  <Link to={`interviews/${idx}`}>
-                    <Button variant="contained" color="primary">Go</Button>
-                  </Link>
-                </TableCell>
-              </TableRow>
-            ))
-          }
-        </TableBody>
-      </Table>
+      <MuiThemeProvider theme={theme}>
+        <Table className="interview-index">
+          <TableHead>
+            <TableRow>
+              <TableCell>Company</TableCell>
+              <TableCell>Position</TableCell>
+              <TableCell>Posted by</TableCell>
+              <TableCell># of Questions</TableCell>
+              <TableCell>Link</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {
+              this.state.list.map((item, idx) => (
+                <TableRow key={idx}>
+                  <TableCell>{item.company}</TableCell>
+                  <TableCell>{item.position}</TableCell>
+                  <TableCell>{item.displayName}</TableCell>
+                  <TableCell>{item.questionCount}</TableCell>
+                  <TableCell>
+                    <Link to={`interviews/${idx}`}>
+                      <Button variant="contained" color="primary">Go</Button>
+                    </Link>
+                  </TableCell>
+                </TableRow>
+              ))
+            }
+          </TableBody>
+        </Table>
+      </MuiThemeProvider>
     );
   }
 }
