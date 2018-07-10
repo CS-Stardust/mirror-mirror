@@ -1,0 +1,18 @@
+{
+  "development": {
+    "username": "test",
+    "password": "password",
+    "database": "mirror_mirror",
+    "host": "127.0.0.1",
+    "port": 5432,
+    "dialect":"postgres"
+  },
+  "test": {
+    "use_env_variable": "postgres://ymkfvahb:HoLHnMR4mC5Rkg3P4Ob_Z6a9Mp6HuJE4@stampy.db.elephantsql.com:5432/ymkfvahb",
+    "dialect": "postgres"
+  },
+  "production": {
+    "use_env_variable": "postgres://ymkfvahb:HoLHnMR4mC5Rkg3P4Ob_Z6a9Mp6HuJE4@stampy.db.elephantsql.com:5432/ymkfvahb",
+    "dialect": "postgres"
+  }
+}
