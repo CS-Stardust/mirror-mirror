@@ -18,9 +18,14 @@
   color: #676E7B;
 }
 
+.App-header h1 {
+  margin: 0.25em 0 0;
+}
+
 .App-header img {
   position: absolute;
-  top: -0.1em;
+  height: 90%;
+  top: 0.3em;
   left: 2em;
 }
 

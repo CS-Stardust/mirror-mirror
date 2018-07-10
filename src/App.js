@@ -19,6 +19,9 @@ class App extends Component {
           <header className="App-header">
             <img src="/cs-logo.png" alt="Codesmith logo" />
             <h1 className="App-title"><Link to="/">Mirror Mirror</Link></h1>
+            <p style={{ marginBottom: '0.5em', fontSize: '0.9em' }} >
+              <em>A Codesmith Interview Repository</em>
+            </p>
           </header>
           <nav>
             <Link to="/interviews">View All Interviews</Link>
