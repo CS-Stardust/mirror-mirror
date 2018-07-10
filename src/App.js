@@ -17,13 +17,12 @@ class App extends Component {
       <Router>
         <div className="App">
           <header className="App-header">
-            <img src="./cs-logo.png" alt="Codesmith logo" />
-            <Link to="/"><h1 className="App-title">Mirror Mirror</h1></Link>
+            <img src="/cs-logo.png" alt="Codesmith logo" />
+            <h1 className="App-title"><Link to="/">Mirror Mirror</Link></h1>
           </header>
           <nav>
-            <Link to="/interviews">View all Interviews</Link>
+            <Link to="/interviews">View All Interviews</Link>
             <Link to="/interviews/new">Add an Interview</Link>
-            <Link to="/interviews/sample">View Sample Interview</Link>
           </nav>
           <Switch>
             <Route exact path="/interviews" component={InterviewIndex} />

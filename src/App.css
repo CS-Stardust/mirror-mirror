@@ -7,16 +7,21 @@
 }
 
 .App-header {
-  display: grid;
-  grid-template-columns: 100px 0.92fr;
+  position: relative;
+  text-align: center;
   background-color: #f7f7f7;
   padding: 10px;
-  color: #676E7B;
   width: 100%;
 }
 
-.App-header>img {
-  padding-left: 10px;
+.App-header h1 a {
+  color: #676E7B;
+}
+
+.App-header img {
+  position: absolute;
+  top: -0.1em;
+  left: 2em;
 }
 
 .App-title {
