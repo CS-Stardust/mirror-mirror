@@ -3,32 +3,47 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 100%;
 }
 
 .App-header {
-  background-color: #222;
-  color: white;
-  margin-bottom: 2em;
+  position: relative;
+  text-align: center;
+  background-color: #f7f7f7;
+  padding: 10px;
   width: 100%;
+}
+
+.App-header h1 a {
+  color: #676E7B;
+}
+
+.App-header img {
+  position: absolute;
+  top: -0.1em;
+  left: 2em;
 }
 
 .App-title {
   font-size: 2em;
   font-style: italic;
   text-transform: uppercase;
+  color: #676E7B;
+}
+
+a {
+  text-decoration: none;
 }
 
 nav {
-  background-color: #6e8b3d;
+  background-color: #676E7B;
   padding: 0.5em;
+  width: 100%;
+  margin-bottom: 2em;
 }
 
 nav a {
+  color: white;
   margin: 0 1em;
   padding: 0.5em;
-}
-
-header a {
-  text-decoration: none;
-  color: white;
 }
