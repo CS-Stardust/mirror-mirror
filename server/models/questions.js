@@ -5,18 +5,21 @@ var Sequelize = require('sequelize');
 var sequelize = new Sequelize('mirror_mirror', 'test','password', {
   dialect: 'postgres'
 });
-module.exports = (sequelize, DataTypes) => {
+const Users = require('./users')();
+const Interviews = require ('./interviews');
+
+module.exports = (DataTypes) => {
   var Questions = sequelize.define('Questions', {
 
     question: Sequelize.STRING,
-    interview_id: Sequelize.INTEGER
+    interview_id: {
+      type: Sequelize.INTEGER,
+      references: {
+        model: Interviews,
+        key: 'id'
+      }}
    
   }, {});
-  Questions.associate = function(models) {
-    // associations can be defined here
-    Questions.hasMany(models.Interviews, {
-      foreignKey: 'interviewID'
-    });
-  };
+
   return Questions;
 };
