@@ -29,7 +29,8 @@ export default class InterviewIndex extends Component {
   componentDidMount() {
     axios.get('/interviews')
       .then((response) => {
-        this.setState({ list: response.map(deserializer) });
+        this.setState({ list: response.data });
+        console.log('state list', this.state.list);
       })
       .catch((error) => {
         console.error({ error });
@@ -57,8 +58,8 @@ export default class InterviewIndex extends Component {
                 <TableRow key={idx}>
                   <TableCell>{item.company}</TableCell>
                   <TableCell>{item.position}</TableCell>
-                  <TableCell>{item.displayName}</TableCell>
-                  <TableCell>{item.questionCount}</TableCell>
+                  <TableCell>{item.displayname}</TableCell>
+                  <TableCell>{item.questioncount}</TableCell>
                   <TableCell>
                     <Link to={`interviews/${idx}`}>
                       <Button variant="contained" color="primary">Go</Button>

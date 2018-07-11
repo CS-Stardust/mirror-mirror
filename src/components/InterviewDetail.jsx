@@ -3,7 +3,7 @@ import LabeledText from './LabeledText';
 
 const InterviewDetail = props => (
   <div className="interview-detail">
-    <p className="no-margin">{props.displayName}</p>
+    <p className="no-margin">{props.displayname}</p>
     <a href={`https://github.com/${props.handle}`}>{props.handle}</a>
     <h1>Interview with {props.company}</h1>
     <div className="one-line">
