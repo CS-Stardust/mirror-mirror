@@ -7,7 +7,8 @@ const bodyParser = require('body-parser');
 const expressSession = require('express-session');
 const controllers = require('./controllers/index.js');
 var pgp = require('pg-promise')(/*options*/)
-var db = pgp('postgres://test:password@localhost:5432/mirror_mirror');
+const db = require('../db')
+
 
 var Sequelize = require('sequelize');
 var sequelize = new Sequelize('mirror_mirror', 'test','password', {
