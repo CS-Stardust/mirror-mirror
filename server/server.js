@@ -83,21 +83,7 @@ app.use(express.static('build'));
   // });
   // app.use(express.static('build'));
 
-app.get('/interviews', dbController.getInterviews);
-
-app.get('interviews/:id', (req, res, next) => {
-  const queryText = `SELECT question_text
-FROM questions
-WHERE interview_id = $1;`
-  const value = req.params.id;
-  client.query(text, value)
-    .then(res => {
-      console.log(res.rows)
-      // { name: 'brianc', email: 'brian.m.carlson@gmail.com' }
-    })
-    .catch(e => console.error(e.stack))
-})
-  
+app.get('/interviews', dbController.getInterviews, dbController.getQuestions);
 
 app.use((req, res) => res.status(404).send('error!'));
 
