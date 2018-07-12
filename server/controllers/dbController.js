@@ -16,6 +16,10 @@ ORDER BY i.interview_date DESC; `
   // next();
 }
 
+dbController.getQuestions = (req, res, next) => {
+  
+}
+
 // this.state.questions = [
 //   {
 //     interviewId: 'ajsdklas;klfj',

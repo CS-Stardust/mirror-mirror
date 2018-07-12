@@ -90,7 +90,7 @@ app.get('interviews/:id', (req, res, next) => {
 FROM questions
 WHERE interview_id = $1;`
   const value = req.params.id;
-  client.query(text, value)
+  client.query(text, value) 
     .then(res => {
       console.log(res.rows)
       // { name: 'brianc', email: 'brian.m.carlson@gmail.com' }

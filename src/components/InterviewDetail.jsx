@@ -14,9 +14,9 @@ const InterviewDetail = props => (
     <h2>Notable Questions</h2>
     <ul>
       {
-        props.questions.map(question =>
-          <li key={question}>{question}</li>)
-      }
+        props.location.state.questionsList.map(question =>
+          <li key={question.interviewId}>{question.questionText}</li>)
+      } 
     </ul>
     <h2>Additional Notes</h2>
     {
