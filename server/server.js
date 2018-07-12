@@ -8,6 +8,7 @@ const expressSession = require('express-session');
 
 var pgp = require('pg-promise')(/*options*/)
 const db = require('../db')
+const dbController = require('./controllers/dbController');
 
 
 // var Sequelize = require('sequelize');
@@ -61,26 +62,42 @@ app.use(express.static('build'));
 
 
 // interview requests (create new, view all, search/filter)
-app.get('/interviews', (req, res, next) => {
-  const queryText = `SELECT i.company, i.position, u.display_name as displayName, COUNT(q.id) as questionCount
-  FROM interviews i JOIN users u ON u.id = i.user_id
-  INNER JOIN questions q ON q.interview_id = i.id
-  GROUP BY i.company, i.position, u.display_name, q.interview_id, i.interview_date
-  ORDER BY i.interview_date DESC;`
-  db.query(queryText)
-    .then(result => res.json(result.rows))
-    .catch(e => console.error(e.stack))
-})
-// app.post('/interview', (req, res) => {
-//   console.log(req);
-//   //method will create a new interview entry witin the database 
-//   controllers.interview.create(req.body, req.session.passport.user);
-  
-//   logRequest(req);
-//   res.end(); 
+// app.get('/interviews', (req, res, next) => {
+//   const queryText = `SELECT i.company, i.position, u.display_name as displayName, COUNT(q.id) as questionCount
+//   FROM interviews i JOIN users u ON u.id = i.user_id
+//   INNER JOIN questions q ON q.interview_id = i.id
+//   GROUP BY i.company, i.position, u.display_name, q.interview_id, i.interview_date
+//   ORDER BY i.interview_date DESC;`
+//   db.query(queryText)
+//     .then(result => res.json(result.rows))
+//     .catch(e => console.error(e.stack))
 // });
 
-app.use(express.static('build'));
+// app.post('/interview', (req, res) => {
+  //   console.log(req);
+  //   //method will create a new interview entry witin the database 
+  //   controllers.interview.create(req.body, req.session.passport.user);
+  
+  //   logRequest(req);
+  //   res.end(); 
+  // });
+  // app.use(express.static('build'));
+
+app.get('/interviews', dbController.getInterviews);
+
+app.get('interviews/:id', (req, res, next) => {
+  const queryText = `SELECT question_text
+FROM questions
+WHERE interview_id = $1;`
+  const value = req.params.id;
+  client.query(text, value)
+    .then(res => {
+      console.log(res.rows)
+      // { name: 'brianc', email: 'brian.m.carlson@gmail.com' }
+    })
+    .catch(e => console.error(e.stack))
+})
+  
 
 app.use((req, res) => res.status(404).send('error!'));
 
