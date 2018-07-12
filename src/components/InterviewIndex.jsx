@@ -36,6 +36,7 @@ export default class InterviewIndex extends Component {
   componentDidMount() {
     axios.get('/interviews')
       .then((response) => {
+        console.log(Object.entries(response));
         this.setState({ list: response.data });
         console.log('state list', this.state.list);
         console.log('questions list', this.state.interviewQuestions);
