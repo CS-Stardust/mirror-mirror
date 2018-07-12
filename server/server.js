@@ -5,8 +5,9 @@ const passport = require('passport');
 const Strategy = require('passport-github').Strategy;
 const bodyParser = require('body-parser');
 const expressSession = require('express-session');
+const PORT = 3000;
 
-var pgp = require('pg-promise')(/*options*/)
+const pgp = require('pg-promise')(/*options*/)
 const db = require('../db')
 const dbController = require('./controllers/dbController');
 
@@ -51,9 +52,9 @@ app.use(passport.session());
 
 // app.get('/login/github/return',
 //   passport.authenticate('github', { failureRedirect: '/error' }),
-  // function(req, res, next) {
-  //   res.sendFile(path.join(__dirname + '/../build/index.html'));
-  // }
+// function(req, res, next) {
+//   res.sendFile(path.join(__dirname + '/../build/index.html'));
+// }
 // );
 app.get('/', function (req, res, next) {
   res.sendFile(path.join(__dirname + '/../build/index.html'));
@@ -74,21 +75,21 @@ app.use(express.static('build'));
 // });
 
 // app.post('/interview', (req, res) => {
-  //   console.log(req);
-  //   //method will create a new interview entry witin the database 
-  //   controllers.interview.create(req.body, req.session.passport.user);
-  
-  //   logRequest(req);
-  //   res.end(); 
-  // });
-  // app.use(express.static('build'));
+//   console.log(req);
+//   //method will create a new interview entry witin the database 
+//   controllers.interview.create(req.body, req.session.passport.user);
 
-app.get('/interviews', dbController.getInterviews, dbController.getQuestions);
+//   logRequest(req);
+//   res.end(); 
+// });
+// app.use(express.static('build'));
+
+app.get('/interviews', dbController.getInterviews, dbController.getQuestions, (req, res) => res.status(200).send(res.locals));
 
 app.use((req, res) => res.status(404).send('error!'));
 
-app.listen(3000, () => {
-  console.log('listening at port 3000...');
+app.listen(PORT, () => {
+  console.log(`Listening at port ${PORT} >^..^<`);
 });
 
 logRequest = function ({ body, headers, query, cookies }) {
