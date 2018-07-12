@@ -10,6 +10,7 @@ import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import theme from '../theme.js';
 import { Link } from 'react-router-dom';
 import dummyDetail from '../sampleInterview';
+import dummmyQuestions from '../sampleQuestionsArray';
 
 const deserializer = interview => ({
   displayName: interview.displayName,
@@ -18,14 +19,19 @@ const deserializer = interview => ({
   questionCount: interview.questions.length,
 });
 
+
+
 export default class InterviewIndex extends Component {
   constructor() {
     super();
     this.state = {
       list: [],
-      interviewQuestions: []
+      interviewQuestions: dummmyQuestions.interviewQuestionsSample
     };
   }
+
+  filterInterviewQuestionsById = (id) => 
+    (this.state.interviewQuestions.filter(question => question.interviewId === id));
 
   componentDidMount() {
     axios.get('/interviews')
@@ -33,6 +39,7 @@ export default class InterviewIndex extends Component {
         console.log(Object.entries(response));
         this.setState({ list: response.data });
         console.log('state list', this.state.list);
+        console.log('questions list', this.state.interviewQuestions);
       })
       .catch((error) => {
         console.error({ error });
@@ -40,6 +47,7 @@ export default class InterviewIndex extends Component {
         this.setState({ list: [dummyDetail].map(deserializer) });
       });
   }
+
 
   render() {
     return (
@@ -64,7 +72,10 @@ export default class InterviewIndex extends Component {
                   <TableCell>{item.displayname}</TableCell>
                   <TableCell>{item.questioncount}</TableCell>
                   <TableCell>
-                    <Link to={`interviews/${item.interviewid}`}>
+                    <Link to={{
+                        pathname: `/interviews/${item.interviewid}`,
+                      state: { questionsList: this.filterInterviewQuestionsById(item.interviewid) }
+                    }} >
                       <Button variant="contained" color="primary">Go</Button>
                     </Link>
                   </TableCell>
