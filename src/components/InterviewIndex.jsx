@@ -23,6 +23,7 @@ export default class InterviewIndex extends Component {
     super();
     this.state = {
       list: [],
+      interviewQuestions: []
     };
   }
 
@@ -54,19 +55,20 @@ export default class InterviewIndex extends Component {
           </TableHead>
           <TableBody>
             {
-              this.state.list.map((item, idx) => (
-                <TableRow key={idx}>
+              this.state.list.map((item) => {
+                return(
+                <TableRow key={item.interviewid}>
                   <TableCell>{item.company}</TableCell>
                   <TableCell>{item.position}</TableCell>
                   <TableCell>{item.displayname}</TableCell>
                   <TableCell>{item.questioncount}</TableCell>
                   <TableCell>
-                    <Link to={`interviews/${idx}`}>
+                    <Link to={`interviews/${item.interviewid}`}>
                       <Button variant="contained" color="primary">Go</Button>
                     </Link>
                   </TableCell>
                 </TableRow>
-              ))
+              )})
             }
           </TableBody>
         </Table>
