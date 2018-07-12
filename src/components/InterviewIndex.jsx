@@ -63,7 +63,6 @@ export default class InterviewIndex extends Component {
                   <TableCell>{item.displayname}</TableCell>
                   <TableCell>{item.questioncount}</TableCell>
                   <TableCell>
-                    // make link to opject with a state property and object
                     <Link to={`interviews/${item.interviewid}`}>
                       <Button variant="contained" color="primary">Go</Button>
                     </Link>
