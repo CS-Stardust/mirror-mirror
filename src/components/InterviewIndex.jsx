@@ -25,21 +25,22 @@ export default class InterviewIndex extends Component {
   constructor() {
     super();
     this.state = {
-      list: [],
-      interviewQuestions: dummmyQuestions.interviewQuestionsSample
+      interviewsList: [],
+      questionsList: []
     };
   }
 
-  filterInterviewQuestionsById = (id) => 
-    (this.state.interviewQuestions.filter(question => question.interviewId === id));
+  filterInterviewQuestionsById = (id) =>
+    (this.state.questionsList.filter(question => question.interview_id === id));
 
   componentDidMount() {
     axios.get('/interviews')
       .then((response) => {
-        console.log(Object.entries(response));
-        this.setState({ list: response.data });
-        console.log('state list', this.state.list);
-        console.log('questions list', this.state.interviewQuestions);
+        console.log("RESPONSE --> ", response);
+        console.log("INTERVIEWS --> ", response.data.interviews);
+        console.log("QUESTIONS --> ", response.data.questions);
+        this.setState({ interviewsList: response.data.interviews, questionsList: response.data.questions });
+        console.log(`Interviews: ${this.state.interviewsList}, Questions: ${this.state.questionsList}`);
       })
       .catch((error) => {
         console.error({ error });
@@ -47,7 +48,6 @@ export default class InterviewIndex extends Component {
         this.setState({ list: [dummyDetail].map(deserializer) });
       });
   }
-
 
   render() {
     return (
@@ -64,23 +64,24 @@ export default class InterviewIndex extends Component {
           </TableHead>
           <TableBody>
             {
-              this.state.list.map((item) => {
-                return(
-                <TableRow key={item.interviewid}>
-                  <TableCell>{item.company}</TableCell>
-                  <TableCell>{item.position}</TableCell>
-                  <TableCell>{item.displayname}</TableCell>
-                  <TableCell>{item.questioncount}</TableCell>
-                  <TableCell>
-                    <Link to={{
+              this.state.interviewsList.map((item) => {
+                return (
+                  <TableRow key={item.interviewid}>
+                    <TableCell>{item.company}</TableCell>
+                    <TableCell>{item.position}</TableCell>
+                    <TableCell>{item.displayname}</TableCell>
+                    <TableCell>{item.questioncount}</TableCell>
+                    <TableCell>
+                      <Link to={{
                         pathname: `/interviews/${item.interviewid}`,
-                      state: { questionsList: this.filterInterviewQuestionsById(item.interviewid) }
-                    }} >
-                      <Button variant="contained" color="primary">Go</Button>
-                    </Link>
-                  </TableCell>
-                </TableRow>
-              )})
+                        state: { questionsList: this.filterInterviewQuestionsById(item.interviewid) }
+                      }} >
+                        <Button variant="contained" color="primary">Go</Button>
+                      </Link>
+                    </TableCell>
+                  </TableRow>
+                )
+              })
             }
           </TableBody>
         </Table>
