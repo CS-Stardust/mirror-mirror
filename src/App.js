@@ -33,7 +33,7 @@ class App extends Component {
             <Route
               path="/interviews/:id"
               render={props => (
-                <InterviewDetail {...dummyDetail} {...props} />
+                <InterviewDetail {...props} />
               )}
             />
           </Switch>

@@ -32,11 +32,13 @@ export default class InterviewIndex extends Component {
 
   filterInterviewQuestionsById = (id) =>
     (this.state.questionsList.filter(question => question.interview_id === id));
+  
+  getInterviewByIdFromState = (id) => 
+    (this.state.interviewsList.find(interview => interview.interviewid === id));
 
   componentDidMount() {
     axios.get('/interviews')
       .then((response) => {
-        console.log("RESPONSE --> ", response);
         console.log("INTERVIEWS --> ", response.data.interviews);
         console.log("QUESTIONS --> ", response.data.questions);
         this.setState({ interviewsList: response.data.interviews, questionsList: response.data.questions });
@@ -74,7 +76,8 @@ export default class InterviewIndex extends Component {
                     <TableCell>
                       <Link to={{
                         pathname: `/interviews/${item.interviewid}`,
-                        state: { questionsList: this.filterInterviewQuestionsById(item.interviewid) }
+                        state: { questionsList: this.filterInterviewQuestionsById(item.interviewid),
+                                 interview: this.getInterviewByIdFromState(item.interviewid)  }
                       }} >
                         <Button variant="contained" color="primary">Go</Button>
                       </Link>
